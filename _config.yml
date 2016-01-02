@@ -1,0 +1,15 @@
+### Site configuration flags
+
+# Name of your site
+name: Terrestrial Documentation
+
+# No baseurl needed if your hosting your site at a user repository (http://username.github.io)
+# and not a project repository (http://username.github.io/repository-name)
+
+
+### No need to change the following flags!
+markdown: redcarpet
+#highlighter: rogue
+
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "with_toc_data"]

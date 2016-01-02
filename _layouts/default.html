@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- CSS Files -->
+    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/github-markdown.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/style.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/css/pygment_trac.css" media="screen">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <!-- Scripts -->
+    <script src="{{ site.baseurl }}/js/affix.js"></script>
+    <script src="{{ site.baseurl }}/js/scrollspy.js"></script>
+    <!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+    <title>{{ page.title }}</title>
+</head>
+
+<body data-spy="scroll" data-target=".scrollspy" >
+    <div class="main-wrapper">
+        <div class="header">
+        </div>
+        <div class="content-wrapper">
+            <div id="nav" class="side-bar scrollspy" style="margin-top: 10px">
+                <img src="{{ site.baseurl }}/images/t_logo.png" style="width: 55px; position: absolute; margin-top: 10px;"/>
+                
+                <h1 class="main-title"><span style="font-size:18px;letter-spacing: 0px;">TERRESTRIAL</span><span style="display:block;margin-top: -4px;"> DOCUMENTATION</span></h1>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+
+
+
+            <section class="main-content markdown-body" id="main-content">
+            	<div class="sidebar-shadow"></div>
+            	<div class="sidebar-shadow-right"></div>
+                {{content}}
+            </section>
+        </div>
+    </div>
+</body>
+<!--
+<body>
+    <header>
+        <div class="inner">
+            <h1>{{ page.title }}</h1>
+            <h2>{{ page.description }}</h2>
+        </div>
+    </header>
+    <div id="content-wrapper">
+        <div class="inner clearfix">
+            <section id="main-content">
+                {{ content }}
+            </section>
+            <aside id="sidebar">
+                <p>Overview</p>
+                <script async defer src="{{ site.baseurl }}/js/toc.js"></script>
+            </aside>
+        </div>
+    </div>
+</body>
+-->
+<script type="text/javascript">
+var bgWhite = false;
+
+function checkWhiteBG() {
+
+    var y = $(document).scrollTop();
+
+    if (y >= $('.side-bar').offset().top && !bgWhite) {
+
+        $('body').addClass('white-bg');
+        bgWhite = true;
+
+    } else if (bgWhite && y < $('.side-bar').offset().top) {
+
+        $('body').removeClass('white-bg');
+        bgWhite = false;
+
+    }
+
+}
+
+
+$('.side-bar').affix({
+    offset: {
+        top: $('.side-bar').offset().top - 5
+    }
+});
+
+
+
+$(window).scroll(function() {
+
+    //checkWhiteBG();
+
+});
+</script>
+<script async defer src="{{ site.baseurl }}/js/toc.js"></script>
+
+</html>

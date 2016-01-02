@@ -1,1 +1,32 @@
-Hello World
+---
+layout: default
+title: Home
+---
+					
+
+				<section>
+				<h1 class="main-title" style="display:none;">Development</h1>
+				<br>
+				
+			  	{% directory path: sections/development %}
+
+			  	{% if file.url contains '.md' %}
+
+			    <section>
+
+			    	{% markdown  %}
+			    	{% include_relative {{ file.url }}  %}
+			    	{% endmarkdown %}
+			    	
+			    </section>
+
+			    {% endif %}
+
+
+
+				{% enddirectory %}
+
+				</section>
+
+				
+	
