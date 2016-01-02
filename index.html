@@ -1,32 +1,26 @@
 ---
 layout: default
-title: Home
+title: Terrestrial Documentation
 ---
 					
 
-				<section>
+		<section>
 				<h1 class="main-title" style="display:none;">Development</h1>
-				<br>
-				
-			  	{% directory path: sections/development %}
+				<br>	
+<section>
+	{% markdown  %}{% include_relative sections/development/1-getting-started.md  %}{% endmarkdown %}
+</section>
+<section>
+	{% markdown  %}{% include_relative sections/development/2-command-line-tool.md  %}{% endmarkdown %}
+</section>
+<section>
+	{% markdown  %}{% include_relative sections/development/3-ios-sdk.md  %}{% endmarkdown %}
+</section>
+<section>
+	{% markdown  %}{% include_relative sections/development/4-troubleshooting.md  %}{% endmarkdown %}
+</section>
+<section>
+	{% markdown  %}{% include_relative sections/development/5-faq.md  %}{% endmarkdown %}
+</section>
 
-			  	{% if file.url contains '.md' %}
-
-			    <section>
-
-			    	{% markdown  %}
-			    	{% include_relative {{ file.url }}  %}
-			    	{% endmarkdown %}
-			    	
-			    </section>
-
-			    {% endif %}
-
-
-
-				{% enddirectory %}
-
-				</section>
-
-				
-	
+</section>
