@@ -1,0 +1,51 @@
+---
+layout: legal
+title: Terrestrial Legal
+---
+					
+
+				<section>
+				<h1 class="main-title" style="display:none;">Privacy Policy</h1>
+				<br>
+				
+			  	{% directory path: legal/privacy %}
+
+			  	{% if file.url contains '.md' %}
+
+			    <section>
+
+			    	{% markdown  %}
+			    	{% include_relative {{ file.url }}  %}
+			    	{% endmarkdown %}
+			    	
+			    </section>
+
+			    {% endif %}
+
+				{% enddirectory %}
+
+				</section>
+
+
+<section>
+				<h1 class="main-title" style="display:none;">Terms & Conditions</h1>
+				<br>
+				
+			  	{% directory path: legal/terms %}
+
+			  	{% if file.url contains '.md' %}
+
+			    <section>
+
+			    	{% markdown  %}
+			    	{% include_relative {{ file.url }}  %}
+			    	{% endmarkdown %}
+			    	
+			    </section>
+
+			    {% endif %}
+
+				{% enddirectory %}
+
+				</section>
+		

@@ -18,7 +18,11 @@ function generateSideBar (navlist,section) {
 
 Array.prototype.forEach.call(section.querySelectorAll("section"), function(section) {
 
-    var grade = section.querySelector("h2");
+    var headers = section.querySelectorAll("h2");
+
+    Array.prototype.forEach.call(headers, function(grade) {
+
+
     if (grade) {
         console.log(grade.textContent);
         grade.id = grade.textContent.replace(/\s+/g, '-').toLowerCase();
@@ -40,6 +44,9 @@ Array.prototype.forEach.call(section.querySelectorAll("section"), function(secti
         featureLI.innerHTML = "<a href='#" + feature.id + "'>" + feature.textContent + '</a>';
         gradeOl.appendChild(featureLI);
     });
+
+
+});
 
 
 
