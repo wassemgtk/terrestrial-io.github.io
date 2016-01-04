@@ -50,6 +50,7 @@ This is what we will do to your iOS project:
 		- Framework
 			- Terrestrial.framework
 		- Translations
+		- Configuration
 
 4. A reference to the 'Translations' folder will be added where all your translations from the web dashboard will be pulled to.
 
