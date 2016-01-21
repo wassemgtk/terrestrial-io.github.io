@@ -5,6 +5,8 @@ cd ..
 git branch -D master
 git push origin :master
 git checkout -b master
+git add -A
+git commit -m "Added _site folder"
 git filter-branch --subdirectory-filter _site/ -f
 git checkout source
 git push --all origin
