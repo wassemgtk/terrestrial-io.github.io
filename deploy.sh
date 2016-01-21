@@ -2,7 +2,8 @@ jekyll build
 git branch -D master
 git push origin :master
 git checkout -b master
-echo 'docs.terrestrial.io' > CNAME
+sed -i "/\b\(_site\)\b/d" 
 git filter-branch --subdirectory-filter _site/ -f
+echo 'docs.terrestrial.io' > CNAME
 git checkout source
 git push --all origin
