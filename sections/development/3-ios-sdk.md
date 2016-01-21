@@ -74,11 +74,11 @@ Manually setting language
 **Objective C**
 
 {% highlight objc %}
-[[Terrestrial sharedInstance]  setCurrentLanguageTo:"<language code>"];
+[Terrestrial  setCurrentLanguageTo:"<language code>"];
 {% endhighlight %}
 
 **Swift**
 
 {% highlight swift %}
-Terrestrial.sharedInstance().setCurrentLanguageTo("<language code>")
+Terrestrial.setCurrentLanguageTo("<language code>")
 {% endhighlight %}
