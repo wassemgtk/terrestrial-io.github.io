@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- CSS Files -->
+    <link rel="stylesheet" type="text/css" href="/css/github-markdown.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="/css/pygment_trac.css" media="screen">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <!-- Scripts -->
+    <script src="/js/affix.js"></script>
+    <script src="/js/scrollspy.js"></script>
+    <!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+    <title>Terrestrial Documentation</title>
+</head>
+
+<body data-spy="scroll" data-target=".scrollspy" >
+    <div class="main-wrapper">
+        <div class="header">
+        </div>
+        <div class="content-wrapper">
+            <div id="nav" class="side-bar scrollspy" style="margin-top: 10px">
+                <img src="/images/t_logo.png" style="width: 55px; position: absolute; margin-top: 10px;"/>
+                
+                <h1 class="main-title"><span style="font-size:18px;letter-spacing: 0px;">TERRESTRIAL</span><span style="display:block;margin-top: -4px;"> DOCUMENTATION</span></h1>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+
+
+
+            <section class="main-content markdown-body" id="main-content">
+            	<div class="sidebar-shadow"></div>
+            	<div class="sidebar-shadow-right"></div>
+                				<section>
+				<h1 class="main-title" style="display:none;">Development</h1>
+				<br>
+				
+			  	
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="how-terrestrial-works">How Terrestrial Works</h2>
+
+<p>Terrestrial integrates with your projects through a <strong><code>terrestrial.yml</code></strong> file:</p>
+
+<pre><code>joe@terrestrial_mainframe: /secret_mars_mission_app &gt; cat terrestrial.yml
+---
+app_id: &lt;YOUR APP ID&gt;
+project_id: &lt;YOUR PROJECT ID&gt;
+platform: &lt; ios OR android &gt;
+translation_files:
+- path/to/my/translation/file.strings
+- path/to/my/translation/strings.xml
+</code></pre>
+
+<p>Terrestrial will track changes in the files listed under translation_files. When pulling translations, language files will automatically get created, based on the locations of the base localization files.</p>
+
+<h3 id="workflow">Workflow</h3>
+
+<p>Terrestrial uses a simple push, pull model. After you have worked on your project and are ready to upload your latest strings, you can use the Terrestrial CLI to push up your changes. Similarly, once your translators have completed the translations, you can pull down the latest translations, and Terrestrial will automatically create or update the necessary localization files.</p>
+
+<blockquote>
+  <p>If you are working as a team, we recommend adding Terrestrial as part of your automated build cycle. For example, when changes are merged to master, automatically upload the most recent changes to Terrestrial with <code>terrestrial push</code></p>
+</blockquote>
+
+<h3 id="testing">Testing</h3>
+
+<blockquote>
+  <p>The following features are currently iOS only</p>
+</blockquote>
+
+<p>Translation quality is all about context, and Terrestrial gives translators a unique way to translate mobile apps through in browser live <a href="https://www.terrestrial.io/context">in-context translation</a>. You should periodically use Terrestrial’s <a href="http://docs.terrestrial.io/#command-line-tool-photoshoot">photoshoot feature</a> to provide your translators with up to date screenshots.</p>
+
+<p>To conveniently test your application with a different locale, Terrestrial allows you to quickly start your application in a <a href="http://docs.terrestrial.io/#command-line-tool-ignite">foreign locale</a>.</p>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>Your project is configured through <strong><code>terrestrial.yml</code></strong> located in your project root, as seen above. You also have a personal config file located in your home directory <strong><code>~/.terrestrial</code></strong>, which will include user specific information such as your API Key.</p>
+
+<pre><code>aldrin@terrestrial_mainframe: /secret_mars_mission_app &gt; cat ~/.terrestrial
+---
+api_key: abcdefghijklmnopqrstuvwxyz123567890
+</code></pre>
+
+<p>Both files are created automatically as you setup your project.</p>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="getting-started">Getting Started</h2>
+
+<p>To get started, install our command line tool using the following command in your terminal:</p>
+
+<pre><code>gem install terrestrial-cli     
+</code></pre>
+
+<p>To check if the command line interface has been installed, type the following command in your terminal and it should print the release version number.</p>
+
+<pre><code>terrestrial --version
+</code></pre>
+
+<h3 id="ios">iOS</h3>
+
+<p>To get started with iOS, first <em>cd</em> to your <strong>root project directory</strong> in your terminal window. This should be the folder that has your <strong><code>.xcodeproj</code></strong> or <strong><code>.xcworkspace</code></strong> file inside it.</p>
+
+<p>To connect your iOS app project to mission control, you will have to initialize your project:</p>
+
+<pre><code>terrestrial init --api-key &lt;YOUR API KEY&gt; --project-id &lt;YOUR PROJECT ID&gt;
+</code></pre>
+
+<p>Both your Api Key and Project ID can be found in the repository section of <a href="https://mission.terrestrial.io">mission control</a>:</p>
+
+<h4 id="terrestrial-framework">Terrestrial Framework</h4>
+
+<p>The terrestrial framework allows you use the terrestrial photoshoot command to create <em>live UI previews</em> for your translators. It also allows you to localize your <strong><code>.storyboard</code></strong> files using <strong><code>IBInspectable</code></strong> properties, allowing you to define your own identifiers for storyboard strings.</p>
+
+<p>You can install it using either <strong>Cocoapods</strong> or <strong>Carthage</strong>:</p>
+
+<p>To install using <strong>Cocoapods</strong>, add the following line to your <strong><code>Podfile</code></strong>:</p>
+
+<pre><code>pod 'Terrestrial'
+</code></pre>
+
+<p>To install using <strong>Carthage</strong>, add the following line to your <strong><code>Cartfile</code></strong>;</p>
+
+<pre><code>github "terrestrial-io/iOSFrameworkRepo"
+</code></pre>
+
+<p>After framework is installed, import it into every file where NSLocalizedString is called to make sure the framework will be able to detect your strings at run time.</p>
+
+<h4 id="already-localized">Already Localized?</h4>
+
+<p>If you have already extracted strings from your project into .strings files, the init command will use your project’s base language to create a reference to your main <strong><code>Localizable.strings</code></strong> in <strong><code>terrestrial.yml</code></strong>, located in your root project directory. Terrestrial will track changes in the files listed in <strong><code>terrestrial.yml</code></strong> under <code>translation_files</code>.</p>
+
+<p>To see which strings are currently tracked in your new project, run:</p>
+
+<pre><code>terrestrial scan
+</code></pre>
+
+<p><em>scan</em> analyzes your locally tracked .strings files and compares them with strings that have already been uploaded. To see the full diff, you can add the <strong>–verbose</strong> flag. When you start your project and have not uploaded any strings yet, scan will list all the strings in your project.</p>
+
+<h4 id="havent-localized">Haven’t Localized?</h4>
+
+<p>While inside the project directory, run the command below. It will look for strings in your source code and put them into your base language <strong><code>Localizable.strings</code></strong></p>
+
+<pre><code>terrestrial flight
+</code></pre>
+
+<p><em>To read more about the flight command, click <a href="#command-line-tool-flight">here</a></em></p>
+
+<p>When you’ve run the flight command, follow the instructions which will walk you through the string extraction process.</p>
+
+<h3 id="android">Android</h3>
+
+<p>To get started with Android, first <em>cd</em> to your <strong>root project directory</strong> in your terminal window.</p>
+
+<p>To connect your Android app project to mission control, you will have to initialize your project:</p>
+
+<pre><code>terrestrial init --api-key &lt;YOUR API KEY&gt; --project-id &lt;YOUR PROJECT ID&gt;
+</code></pre>
+
+<p>Both your Api Key and Project ID can be found in the repository section of <a href="https://mission.terrestrial.io">mission control</a>:</p>
+
+<p>Terrestrial will automatically detect your <code>res/values/strings.xml</code> file and add it to <strong><code>terrestrial.yml</code></strong>. To see which strings Terrestrial is tracking, run:</p>
+
+<pre><code>terrestrial scan
+</code></pre>
+
+<p><em>scan</em> analyzes the files listed in <strong><code>terrestrial.yml</code></strong> and compares them with strings that have already been uploaded. To see the full diff, you can add the <strong>–verbose</strong> flag. When you start your project and have not uploaded any strings yet, scan will list all the strings in your project.</p>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="command-line-tool">Command Line Tool</h2>
+
+<p>Ths command line tool contains some commands that will allow you to localize your app &amp; also test quickly.</p>
+
+<pre><code>$ nik@terrestrial_mainframe: /secret_mars_mission_app &gt; terrestrial --help
+Usage: terrestrial &lt;command&gt; &lt;options&gt;
+
+Commands
+        init             Initialize your project with Terrestrial.
+        scan             Detect any new or deleted strings in your app.
+        push             Upload the latest strings from your app.
+        pull             Download latest translations and generate relevant localization files.
+        flight           (iOS only) Find human facing strings in your app that are not currently set for translation.
+        ignite &lt;locale&gt;  (iOS only) Start the simulator in a specific locale.
+        photoshoot       (iOS only) Start the simulator in photoshoot mode.
+
+Options
+        --api-key [string]           Set and store api key
+        --project-id [integer]       Set the app's project id
+        --verbose [boolean]          Show additional information related to the command
+        --version                    Show version
+</code></pre>
+
+<h3 id="flight">Flight</h3>
+
+<blockquote>
+  <p><code>flight</code> is currently only supported on iOS.</p>
+</blockquote>
+
+<pre><code>$ terrestrial flight
+</code></pre>
+
+<p>Flight is a command that helps you quickly internationalize an application that has not yet been prepared for multiple languages. If you have strings hardcoded in your project, you can use flight to quickly extract them and swap them with the necessary localization function calls.</p>
+
+<p>Terrestrial will traverse your project structure &amp; analyze:</p>
+
+<blockquote>
+  <p><strong>.m</strong> files</p>
+
+  <p><strong>.swift</strong> files</p>
+
+  <p><strong>.storyboard</strong> files</p>
+</blockquote>
+
+<p>It will look inside these files for <strong>string literals</strong> and for each string that it finds, it will try to determine whether or not the particular string that it has found is intended to be seen by the end user and hence whether is should be internationalized.</p>
+
+<blockquote>
+
+  <h4 id="intelligent-string-extraction"><strong>Intelligent String Extraction</strong></h4>
+
+  <p>Our selection of strings to be translated is done by comparing each string against our internal string model, and it has a number of different rules about what constitutes a <strong>human readable string</strong> inside an app:</p>
+
+  <p>For example, if a string found inside your project looks like:</p>
+
+  <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="s">&quot;thisIsMyString&quot;</span></code></pre></div>
+
+  <p>One rule that Terrestrial uses checks that a strings isn’t camelCased, so such a string would be not picked up by our system. This rule, in combination with a nuumber of different rules allows Terrestrial to internationalize the majority of your app in just one command.</p>
+
+</blockquote>
+
+<p>Flight will list all the strings it finds, and you have the ability to exclude any strings that you wish not to translate:</p>
+
+<pre><code>$ terrestrial flight 
+...
+
+Page 5 of 5
++-------+--------------------+------------------------------------------------+
+| Index | String             | File                                           |
++-------+--------------------+------------------------------------------------+
+| 40    | Oxygen Level       | MarsMission/CockpitViewController.m:96         |
++-------+--------------------+------------------------------------------------+
+| 41    | Open               | MarsMission/PodBayViewController.m:23          |
++-------+--------------------+------------------------------------------------+
+-- Instructions --
+- To exclude any strings from translation, type the index of each string.
+-   e.g. 1,2,4
+------------------
+Any Exclusions? (press return to continue or 'q' to quit at any time)
+</code></pre>
+
+<h3 id="scan">Scan</h3>
+
+<pre><code>$ terrestrial scan
+</code></pre>
+
+<p>This command will look through your localization files and compare them with the strings in mission control to highlight any ommissions/additions of strings. To see a full diff, you can run the command with the <strong><code>--verbose</code></strong> flag.</p>
+
+<h3 id="push">Push</h3>
+
+<pre><code>$ terrestrial push
+</code></pre>
+
+<p>Push will gather strings from your tracked localization files and push them to mission control.</p>
+
+<h3 id="pull">Pull</h3>
+
+<pre><code>$ terrestrial pull
+</code></pre>
+
+<p>This will pull down translations from the online dashboard that are ready to be used and create the appropriate localized files.</p>
+
+<h4 id="ios">iOS</h4>
+
+<p>In iOS, the pull command with place <strong><code>Localizable.strings</code></strong> files in the appropriate .lproj folders in your project. For example a spanish translation will be placed in the <strong>‘/es.lproj’</strong> folder.</p>
+
+<p>Don’t forget to add the language you’ve pulled in your project in the Localizations section of your xcode project.</p>
+
+<p><img src="/images/localizations.png" alt="Terrestrial Embedded Swift" /></p>
+
+<h4 id="android">Android</h4>
+
+<p>In Android, the pull command will create the appropriate folder structure according to <a href="http://developer.android.com/guide/topics/resources/localization.html">android’s default localization specification</a> and place the translated <strong><code>strings.xml</code></strong> files in the correct values folders. If you pull down Finnish translations, Terrestrial will create or update a <code>strings.xml</code> file in <strong>res/values-fi/strings.xml</strong>.</p>
+
+<h3 id="ignite">Ignite</h3>
+
+<blockquote>
+  <p><code>ignite</code> is currently only supported for iOS projects.</p>
+</blockquote>
+
+<pre><code>$ terrestrial ignite &lt;language-code&gt;
+</code></pre>
+
+<p>Ignite will launch your iOS app in the simulator using the last used build scheme.</p>
+
+<h3 id="photoshoot">Photoshoot</h3>
+
+<blockquote>
+  <p><code>photoshoot</code> is currently only supported for iOS projects.</p>
+</blockquote>
+
+<pre><code>$ terrestrial photoshoot
+</code></pre>
+
+<p>Photoshoot works like ignite but launches your iOS app in your native language, while also allowing you take screenshots that will generate live UI previews. This allows translators to make sure their translations fit the app’s interface directly in the web translation interface.</p>
+
+<p>A green camera icon should appear on the center right of the screen, which you can click to generate and upload the screenshots.</p>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="ios-sdk">iOS SDK</h2>
+
+<p>You can install the Terrestrial iOS SDK from <strong>Cocoapods</strong> or <strong>Carthage</strong>:</p>
+
+<p>To install using <strong>Cocoapods</strong>, add the following line to your <strong><code>Podfile</code></strong>:</p>
+
+<pre><code>pod 'Terrestrial'
+</code></pre>
+
+<p>To install using <strong>Carthage</strong>, add the following line to your <strong><code>Cartfile</code></strong>;</p>
+
+<pre><code>github "terrestrial-io/iOSFrameworkRepo"
+</code></pre>
+
+<p>If you want to install the SDK manually, you will have to make sure it is included in your project as an <strong>Embedded Binary</strong> :</p>
+
+<p><img src="/images/embedded-binary.png" alt="Terrestrial Embedded Binary" /></p>
+
+<h3 id="api">API</h3>
+
+<p>To simply translate a String without any comments you simply append <strong>.<code>translated</code></strong> to it.</p>
+
+<p>This is a light wrapper around NSLocalizedString and calls the same function that NSLocalizedString would call, retrieving the correct string from your <strong><code>.strings</code></strong> files at runtime.</p>
+
+<p><strong>Objective C</strong></p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="s">@&quot;This is my string&quot;</span> <span class="o">-&gt;</span> <span class="s">@&quot;This is my string&quot;</span><span class="p">.</span><span class="n">translated</span><span class="p">;</span></code></pre></div>
+
+<p><strong>Swift</strong></p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="s">&quot;This is my string&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;This is my string&quot;</span><span class="p">.</span><span class="n">translated</span></code></pre></div>
+
+<p>You always have the ability to fall back to native iOS localization libraries. However, enable photoshoot mode, the Terrestrial framework must be imported in any file that uses NSLocalizedString.</p>
+
+<blockquote>
+  <p>Note: these functions will not work with <strong>static strings</strong> or string declared with <strong>let</strong> as they cannot be changed at runtime.</p>
+</blockquote>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h4 id="i-was-part-of-the-early-beta-how-do-i-migrate-to-the-new-terrestrial-tools">I was part of the early beta. How do I migrate to the new terrestrial tools?</h4>
+
+<p>If you were part of the early beta, you will have installed previous versions of the Terrestrial development toolkit. Due to the incredible feedback we received, we have made some backwards incompatible changes to how Terrestrial works. There are a couple things to note:</p>
+
+<p><strong>CLI moved to standalone Ruby gem.</strong></p>
+
+<p>If you have installed our previous CLI, you should uninstall so it does not conflict with the new gem. To do this, remove the contents of <strong><code>/usr/local/terrestrial</code></strong>. The Mac application has also been deprecated in order to allow Terrestrial to work better with automated build tools.</p>
+
+<p><strong>Project Configuration</strong></p>
+
+<p>Previously Terrestrial created a <strong><code>Terrestrial</code></strong> folder in your project root. This has been replaced with a simple <strong><code>terrestrial.yml</code></strong> file. To migrate your old configuration, run the following command:</p>
+
+<pre><code>cd /to/my/project
+cp Terrestrial/Configuration/config.yml terrestrial.yml
+</code></pre>
+
+<p><strong>BaseStrings.json</strong></p>
+
+<blockquote>
+  <p>iOS Only</p>
+</blockquote>
+
+<p>Terrestrial no longer uses a proprietary localization file format, but instead integrates directly with iOS and Android native localization files. If you have strings in BaseStrings.json, you will have to move them to the appropriate Localizable.strings file.</p>
+
+<p>If you need assistance with the migration, contact us at <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#116;&#101;&#097;&#109;&#064;&#116;&#101;&#114;&#114;&#101;&#115;&#116;&#114;&#105;&#097;&#108;&#046;&#105;&#111;">&#116;&#101;&#097;&#109;&#064;&#116;&#101;&#114;&#114;&#101;&#115;&#116;&#114;&#105;&#097;&#108;&#046;&#105;&#111;</a> or on <a href="https://terrestrial-slack.herokuapp.com/">Slack</a>. We are happy to help you get onto the new and improved version of Terrestrial.</p>
+
+<h4 id="terrestrial-is-not-picking-up-string-from-my-localization-file">Terrestrial is not picking up string from my localization file</h4>
+
+<p>Terrestrial only tracks files referenced in <strong><code>terrestrial.yml</code></strong>. Make sure your files are listed under localization_files.</p>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="faq">FAQ</h2>
+
+<h4 id="do-i-have-to-run-flight-on-my-new-project">Do I have to run <code>flight</code> on my new project?</h4>
+
+<p>Nope! If you want to extract your strings manually into Localizable.strings files you can do so. Just remember to add your localization files into <strong><code>terrestrial.yml</code></strong>.</p>
+
+<h4 id="did-not-find-the-answer-you-are-looking-for">Did not find the answer you are looking for?</h4>
+
+<p>Did we miss something in the docs? Was something confusing or unclear? Email us at <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#116;&#101;&#097;&#109;&#064;&#116;&#101;&#114;&#114;&#101;&#115;&#116;&#114;&#105;&#097;&#108;&#046;&#105;&#111;">&#116;&#101;&#097;&#109;&#064;&#116;&#101;&#114;&#114;&#101;&#115;&#116;&#114;&#105;&#097;&#108;&#046;&#105;&#111;</a> or chat with us on <a href="https://terrestrial-slack.herokuapp.com/">Slack</a>!</p>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+
+
+				
+
+				</section>
+
+		
+
+            </section>
+        </div>
+    </div>
+</body>
+<!--
+<body>
+    <header>
+        <div class="inner">
+            <h1>Terrestrial Documentation</h1>
+            <h2></h2>
+        </div>
+    </header>
+    <div id="content-wrapper">
+        <div class="inner clearfix">
+            <section id="main-content">
+                				<section>
+				<h1 class="main-title" style="display:none;">Development</h1>
+				<br>
+				
+			  	
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="how-terrestrial-works">How Terrestrial Works</h2>
+
+<p>Terrestrial integrates with your projects through a <strong><code>terrestrial.yml</code></strong> file:</p>
+
+<pre><code>joe@terrestrial_mainframe: /secret_mars_mission_app &gt; cat terrestrial.yml
+---
+app_id: &lt;YOUR APP ID&gt;
+project_id: &lt;YOUR PROJECT ID&gt;
+platform: &lt; ios OR android &gt;
+translation_files:
+- path/to/my/translation/file.strings
+- path/to/my/translation/strings.xml
+</code></pre>
+
+<p>Terrestrial will track changes in the files listed under translation_files. When pulling translations, language files will automatically get created, based on the locations of the base localization files.</p>
+
+<h3 id="workflow">Workflow</h3>
+
+<p>Terrestrial uses a simple push, pull model. After you have worked on your project and are ready to upload your latest strings, you can use the Terrestrial CLI to push up your changes. Similarly, once your translators have completed the translations, you can pull down the latest translations, and Terrestrial will automatically create or update the necessary localization files.</p>
+
+<blockquote>
+  <p>If you are working as a team, we recommend adding Terrestrial as part of your automated build cycle. For example, when changes are merged to master, automatically upload the most recent changes to Terrestrial with <code>terrestrial push</code></p>
+</blockquote>
+
+<h3 id="testing">Testing</h3>
+
+<blockquote>
+  <p>The following features are currently iOS only</p>
+</blockquote>
+
+<p>Translation quality is all about context, and Terrestrial gives translators a unique way to translate mobile apps through in browser live <a href="https://www.terrestrial.io/context">in-context translation</a>. You should periodically use Terrestrial’s <a href="http://docs.terrestrial.io/#command-line-tool-photoshoot">photoshoot feature</a> to provide your translators with up to date screenshots.</p>
+
+<p>To conveniently test your application with a different locale, Terrestrial allows you to quickly start your application in a <a href="http://docs.terrestrial.io/#command-line-tool-ignite">foreign locale</a>.</p>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>Your project is configured through <strong><code>terrestrial.yml</code></strong> located in your project root, as seen above. You also have a personal config file located in your home directory <strong><code>~/.terrestrial</code></strong>, which will include user specific information such as your API Key.</p>
+
+<pre><code>aldrin@terrestrial_mainframe: /secret_mars_mission_app &gt; cat ~/.terrestrial
+---
+api_key: abcdefghijklmnopqrstuvwxyz123567890
+</code></pre>
+
+<p>Both files are created automatically as you setup your project.</p>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="getting-started">Getting Started</h2>
+
+<p>To get started, install our command line tool using the following command in your terminal:</p>
+
+<pre><code>gem install terrestrial-cli     
+</code></pre>
+
+<p>To check if the command line interface has been installed, type the following command in your terminal and it should print the release version number.</p>
+
+<pre><code>terrestrial --version
+</code></pre>
+
+<h3 id="ios">iOS</h3>
+
+<p>To get started with iOS, first <em>cd</em> to your <strong>root project directory</strong> in your terminal window. This should be the folder that has your <strong><code>.xcodeproj</code></strong> or <strong><code>.xcworkspace</code></strong> file inside it.</p>
+
+<p>To connect your iOS app project to mission control, you will have to initialize your project:</p>
+
+<pre><code>terrestrial init --api-key &lt;YOUR API KEY&gt; --project-id &lt;YOUR PROJECT ID&gt;
+</code></pre>
+
+<p>Both your Api Key and Project ID can be found in the repository section of <a href="https://mission.terrestrial.io">mission control</a>:</p>
+
+<h4 id="terrestrial-framework">Terrestrial Framework</h4>
+
+<p>The terrestrial framework allows you use the terrestrial photoshoot command to create <em>live UI previews</em> for your translators. It also allows you to localize your <strong><code>.storyboard</code></strong> files using <strong><code>IBInspectable</code></strong> properties, allowing you to define your own identifiers for storyboard strings.</p>
+
+<p>You can install it using either <strong>Cocoapods</strong> or <strong>Carthage</strong>:</p>
+
+<p>To install using <strong>Cocoapods</strong>, add the following line to your <strong><code>Podfile</code></strong>:</p>
+
+<pre><code>pod 'Terrestrial'
+</code></pre>
+
+<p>To install using <strong>Carthage</strong>, add the following line to your <strong><code>Cartfile</code></strong>;</p>
+
+<pre><code>github "terrestrial-io/iOSFrameworkRepo"
+</code></pre>
+
+<p>After framework is installed, import it into every file where NSLocalizedString is called to make sure the framework will be able to detect your strings at run time.</p>
+
+<h4 id="already-localized">Already Localized?</h4>
+
+<p>If you have already extracted strings from your project into .strings files, the init command will use your project’s base language to create a reference to your main <strong><code>Localizable.strings</code></strong> in <strong><code>terrestrial.yml</code></strong>, located in your root project directory. Terrestrial will track changes in the files listed in <strong><code>terrestrial.yml</code></strong> under <code>translation_files</code>.</p>
+
+<p>To see which strings are currently tracked in your new project, run:</p>
+
+<pre><code>terrestrial scan
+</code></pre>
+
+<p><em>scan</em> analyzes your locally tracked .strings files and compares them with strings that have already been uploaded. To see the full diff, you can add the <strong>–verbose</strong> flag. When you start your project and have not uploaded any strings yet, scan will list all the strings in your project.</p>
+
+<h4 id="havent-localized">Haven’t Localized?</h4>
+
+<p>While inside the project directory, run the command below. It will look for strings in your source code and put them into your base language <strong><code>Localizable.strings</code></strong></p>
+
+<pre><code>terrestrial flight
+</code></pre>
+
+<p><em>To read more about the flight command, click <a href="#command-line-tool-flight">here</a></em></p>
+
+<p>When you’ve run the flight command, follow the instructions which will walk you through the string extraction process.</p>
+
+<h3 id="android">Android</h3>
+
+<p>To get started with Android, first <em>cd</em> to your <strong>root project directory</strong> in your terminal window.</p>
+
+<p>To connect your Android app project to mission control, you will have to initialize your project:</p>
+
+<pre><code>terrestrial init --api-key &lt;YOUR API KEY&gt; --project-id &lt;YOUR PROJECT ID&gt;
+</code></pre>
+
+<p>Both your Api Key and Project ID can be found in the repository section of <a href="https://mission.terrestrial.io">mission control</a>:</p>
+
+<p>Terrestrial will automatically detect your <code>res/values/strings.xml</code> file and add it to <strong><code>terrestrial.yml</code></strong>. To see which strings Terrestrial is tracking, run:</p>
+
+<pre><code>terrestrial scan
+</code></pre>
+
+<p><em>scan</em> analyzes the files listed in <strong><code>terrestrial.yml</code></strong> and compares them with strings that have already been uploaded. To see the full diff, you can add the <strong>–verbose</strong> flag. When you start your project and have not uploaded any strings yet, scan will list all the strings in your project.</p>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="command-line-tool">Command Line Tool</h2>
+
+<p>Ths command line tool contains some commands that will allow you to localize your app &amp; also test quickly.</p>
+
+<pre><code>$ nik@terrestrial_mainframe: /secret_mars_mission_app &gt; terrestrial --help
+Usage: terrestrial &lt;command&gt; &lt;options&gt;
+
+Commands
+        init             Initialize your project with Terrestrial.
+        scan             Detect any new or deleted strings in your app.
+        push             Upload the latest strings from your app.
+        pull             Download latest translations and generate relevant localization files.
+        flight           (iOS only) Find human facing strings in your app that are not currently set for translation.
+        ignite &lt;locale&gt;  (iOS only) Start the simulator in a specific locale.
+        photoshoot       (iOS only) Start the simulator in photoshoot mode.
+
+Options
+        --api-key [string]           Set and store api key
+        --project-id [integer]       Set the app's project id
+        --verbose [boolean]          Show additional information related to the command
+        --version                    Show version
+</code></pre>
+
+<h3 id="flight">Flight</h3>
+
+<blockquote>
+  <p><code>flight</code> is currently only supported on iOS.</p>
+</blockquote>
+
+<pre><code>$ terrestrial flight
+</code></pre>
+
+<p>Flight is a command that helps you quickly internationalize an application that has not yet been prepared for multiple languages. If you have strings hardcoded in your project, you can use flight to quickly extract them and swap them with the necessary localization function calls.</p>
+
+<p>Terrestrial will traverse your project structure &amp; analyze:</p>
+
+<blockquote>
+  <p><strong>.m</strong> files</p>
+
+  <p><strong>.swift</strong> files</p>
+
+  <p><strong>.storyboard</strong> files</p>
+</blockquote>
+
+<p>It will look inside these files for <strong>string literals</strong> and for each string that it finds, it will try to determine whether or not the particular string that it has found is intended to be seen by the end user and hence whether is should be internationalized.</p>
+
+<blockquote>
+
+  <h4 id="intelligent-string-extraction"><strong>Intelligent String Extraction</strong></h4>
+
+  <p>Our selection of strings to be translated is done by comparing each string against our internal string model, and it has a number of different rules about what constitutes a <strong>human readable string</strong> inside an app:</p>
+
+  <p>For example, if a string found inside your project looks like:</p>
+
+  <div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="s">&quot;thisIsMyString&quot;</span></code></pre></div>
+
+  <p>One rule that Terrestrial uses checks that a strings isn’t camelCased, so such a string would be not picked up by our system. This rule, in combination with a nuumber of different rules allows Terrestrial to internationalize the majority of your app in just one command.</p>
+
+</blockquote>
+
+<p>Flight will list all the strings it finds, and you have the ability to exclude any strings that you wish not to translate:</p>
+
+<pre><code>$ terrestrial flight 
+...
+
+Page 5 of 5
++-------+--------------------+------------------------------------------------+
+| Index | String             | File                                           |
++-------+--------------------+------------------------------------------------+
+| 40    | Oxygen Level       | MarsMission/CockpitViewController.m:96         |
++-------+--------------------+------------------------------------------------+
+| 41    | Open               | MarsMission/PodBayViewController.m:23          |
++-------+--------------------+------------------------------------------------+
+-- Instructions --
+- To exclude any strings from translation, type the index of each string.
+-   e.g. 1,2,4
+------------------
+Any Exclusions? (press return to continue or 'q' to quit at any time)
+</code></pre>
+
+<h3 id="scan">Scan</h3>
+
+<pre><code>$ terrestrial scan
+</code></pre>
+
+<p>This command will look through your localization files and compare them with the strings in mission control to highlight any ommissions/additions of strings. To see a full diff, you can run the command with the <strong><code>--verbose</code></strong> flag.</p>
+
+<h3 id="push">Push</h3>
+
+<pre><code>$ terrestrial push
+</code></pre>
+
+<p>Push will gather strings from your tracked localization files and push them to mission control.</p>
+
+<h3 id="pull">Pull</h3>
+
+<pre><code>$ terrestrial pull
+</code></pre>
+
+<p>This will pull down translations from the online dashboard that are ready to be used and create the appropriate localized files.</p>
+
+<h4 id="ios">iOS</h4>
+
+<p>In iOS, the pull command with place <strong><code>Localizable.strings</code></strong> files in the appropriate .lproj folders in your project. For example a spanish translation will be placed in the <strong>‘/es.lproj’</strong> folder.</p>
+
+<p>Don’t forget to add the language you’ve pulled in your project in the Localizations section of your xcode project.</p>
+
+<p><img src="/images/localizations.png" alt="Terrestrial Embedded Swift" /></p>
+
+<h4 id="android">Android</h4>
+
+<p>In Android, the pull command will create the appropriate folder structure according to <a href="http://developer.android.com/guide/topics/resources/localization.html">android’s default localization specification</a> and place the translated <strong><code>strings.xml</code></strong> files in the correct values folders. If you pull down Finnish translations, Terrestrial will create or update a <code>strings.xml</code> file in <strong>res/values-fi/strings.xml</strong>.</p>
+
+<h3 id="ignite">Ignite</h3>
+
+<blockquote>
+  <p><code>ignite</code> is currently only supported for iOS projects.</p>
+</blockquote>
+
+<pre><code>$ terrestrial ignite &lt;language-code&gt;
+</code></pre>
+
+<p>Ignite will launch your iOS app in the simulator using the last used build scheme.</p>
+
+<h3 id="photoshoot">Photoshoot</h3>
+
+<blockquote>
+  <p><code>photoshoot</code> is currently only supported for iOS projects.</p>
+</blockquote>
+
+<pre><code>$ terrestrial photoshoot
+</code></pre>
+
+<p>Photoshoot works like ignite but launches your iOS app in your native language, while also allowing you take screenshots that will generate live UI previews. This allows translators to make sure their translations fit the app’s interface directly in the web translation interface.</p>
+
+<p>A green camera icon should appear on the center right of the screen, which you can click to generate and upload the screenshots.</p>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="ios-sdk">iOS SDK</h2>
+
+<p>You can install the Terrestrial iOS SDK from <strong>Cocoapods</strong> or <strong>Carthage</strong>:</p>
+
+<p>To install using <strong>Cocoapods</strong>, add the following line to your <strong><code>Podfile</code></strong>:</p>
+
+<pre><code>pod 'Terrestrial'
+</code></pre>
+
+<p>To install using <strong>Carthage</strong>, add the following line to your <strong><code>Cartfile</code></strong>;</p>
+
+<pre><code>github "terrestrial-io/iOSFrameworkRepo"
+</code></pre>
+
+<p>If you want to install the SDK manually, you will have to make sure it is included in your project as an <strong>Embedded Binary</strong> :</p>
+
+<p><img src="/images/embedded-binary.png" alt="Terrestrial Embedded Binary" /></p>
+
+<h3 id="api">API</h3>
+
+<p>To simply translate a String without any comments you simply append <strong>.<code>translated</code></strong> to it.</p>
+
+<p>This is a light wrapper around NSLocalizedString and calls the same function that NSLocalizedString would call, retrieving the correct string from your <strong><code>.strings</code></strong> files at runtime.</p>
+
+<p><strong>Objective C</strong></p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="s">@&quot;This is my string&quot;</span> <span class="o">-&gt;</span> <span class="s">@&quot;This is my string&quot;</span><span class="p">.</span><span class="n">translated</span><span class="p">;</span></code></pre></div>
+
+<p><strong>Swift</strong></p>
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="s">&quot;This is my string&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;This is my string&quot;</span><span class="p">.</span><span class="n">translated</span></code></pre></div>
+
+<p>You always have the ability to fall back to native iOS localization libraries. However, enable photoshoot mode, the Terrestrial framework must be imported in any file that uses NSLocalizedString.</p>
+
+<blockquote>
+  <p>Note: these functions will not work with <strong>static strings</strong> or string declared with <strong>let</strong> as they cannot be changed at runtime.</p>
+</blockquote>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h4 id="i-was-part-of-the-early-beta-how-do-i-migrate-to-the-new-terrestrial-tools">I was part of the early beta. How do I migrate to the new terrestrial tools?</h4>
+
+<p>If you were part of the early beta, you will have installed previous versions of the Terrestrial development toolkit. Due to the incredible feedback we received, we have made some backwards incompatible changes to how Terrestrial works. There are a couple things to note:</p>
+
+<p><strong>CLI moved to standalone Ruby gem.</strong></p>
+
+<p>If you have installed our previous CLI, you should uninstall so it does not conflict with the new gem. To do this, remove the contents of <strong><code>/usr/local/terrestrial</code></strong>. The Mac application has also been deprecated in order to allow Terrestrial to work better with automated build tools.</p>
+
+<p><strong>Project Configuration</strong></p>
+
+<p>Previously Terrestrial created a <strong><code>Terrestrial</code></strong> folder in your project root. This has been replaced with a simple <strong><code>terrestrial.yml</code></strong> file. To migrate your old configuration, run the following command:</p>
+
+<pre><code>cd /to/my/project
+cp Terrestrial/Configuration/config.yml terrestrial.yml
+</code></pre>
+
+<p><strong>BaseStrings.json</strong></p>
+
+<blockquote>
+  <p>iOS Only</p>
+</blockquote>
+
+<p>Terrestrial no longer uses a proprietary localization file format, but instead integrates directly with iOS and Android native localization files. If you have strings in BaseStrings.json, you will have to move them to the appropriate Localizable.strings file.</p>
+
+<p>If you need assistance with the migration, contact us at <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#116;&#101;&#097;&#109;&#064;&#116;&#101;&#114;&#114;&#101;&#115;&#116;&#114;&#105;&#097;&#108;&#046;&#105;&#111;">&#116;&#101;&#097;&#109;&#064;&#116;&#101;&#114;&#114;&#101;&#115;&#116;&#114;&#105;&#097;&#108;&#046;&#105;&#111;</a> or on <a href="https://terrestrial-slack.herokuapp.com/">Slack</a>. We are happy to help you get onto the new and improved version of Terrestrial.</p>
+
+<h4 id="terrestrial-is-not-picking-up-string-from-my-localization-file">Terrestrial is not picking up string from my localization file</h4>
+
+<p>Terrestrial only tracks files referenced in <strong><code>terrestrial.yml</code></strong>. Make sure your files are listed under localization_files.</p>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+			    <section>
+
+			    	
+<h2 id="faq">FAQ</h2>
+
+<h4 id="do-i-have-to-run-flight-on-my-new-project">Do I have to run <code>flight</code> on my new project?</h4>
+
+<p>Nope! If you want to extract your strings manually into Localizable.strings files you can do so. Just remember to add your localization files into <strong><code>terrestrial.yml</code></strong>.</p>
+
+<h4 id="did-not-find-the-answer-you-are-looking-for">Did not find the answer you are looking for?</h4>
+
+<p>Did we miss something in the docs? Was something confusing or unclear? Email us at <a href="&#109;&#097;&#105;&#108;&#116;&#111;:&#116;&#101;&#097;&#109;&#064;&#116;&#101;&#114;&#114;&#101;&#115;&#116;&#114;&#105;&#097;&#108;&#046;&#105;&#111;">&#116;&#101;&#097;&#109;&#064;&#116;&#101;&#114;&#114;&#101;&#115;&#116;&#114;&#105;&#097;&#108;&#046;&#105;&#111;</a> or chat with us on <a href="https://terrestrial-slack.herokuapp.com/">Slack</a>!</p>
+
+
+			    	
+			    </section>
+
+			    
+
+
+
+				
+
+			  	
+
+
+
+				
+
+				</section>
+
+		
+
+            </section>
+            <aside id="sidebar">
+                <p>Overview</p>
+                <script async defer src="/js/toc.js"></script>
+            </aside>
+        </div>
+    </div>
+</body>
+-->
+<script type="text/javascript">
+var bgWhite = false;
+
+function checkWhiteBG() {
+
+    var y = $(document).scrollTop();
+
+    if (y >= $('.side-bar').offset().top && !bgWhite) {
+
+        $('body').addClass('white-bg');
+        bgWhite = true;
+
+    } else if (bgWhite && y < $('.side-bar').offset().top) {
+
+        $('body').removeClass('white-bg');
+        bgWhite = false;
+
+    }
+
+}
+
+
+$('.side-bar').affix({
+    offset: {
+        top: $('.side-bar').offset().top - 5
+    }
+});
+
+
+
+$(window).scroll(function() {
+
+    //checkWhiteBG();
+
+});
+</script>
+<script async defer src="/js/toc.js"></script>
+
+</html>
