@@ -1,7 +1,7 @@
 
 ##Command Line Tool
 
-Ths command line tool contains some commands that will allow you to localize your app project quickly.
+Ths command line tool contains some commands that will allow you to localize your app & also test quickly.
 
 The commands available to you are:
 
@@ -12,6 +12,10 @@ The commands available to you are:
 	terrestrial push
 
 	terrestrial pull
+
+	terrestrial ignite
+
+	terrestrial photoshoot
 
 
 ###Flight
@@ -48,13 +52,13 @@ The subsequent operations will work with android's localization file structure a
 
 	terrestrial scan
 
-This command will look through your project & highlight any ommissions and additions of strings since the last '[push](#command-line-tool-push)' that may occur as you work.
+This command will look through your strings files & compare them with the strings on the mission control to highlight any ommissions/additions of strings.
 
 ###Push
 
 	terrestrial push
 
-This will look through your project for all the appropriately tagged strings in your projects and push them up to mission control.
+This will look through your base language strings files in your projects and push them up to mission control.
 
 Make sure you have ran the [initialisation](#getting-started) command before trying to push.
 
@@ -62,12 +66,31 @@ Make sure you have ran the [initialisation](#getting-started) command before try
 
 	terrestrial pull
 
-This will pull down translations from the online dashboard that are ready to be used.
+This will pull down translations from the online dashboard that are ready to be used and create the appropriate localized files.
 
 ####iOS
 
-In iOS, the pull command with place **`.json`** files in the Terrestrial/Translations folder in your project root directory. With the Translations folder added as a referenced folder in your xcode project this will automatically build the translations in this folder with your app. 
+In iOS, the pull command with place **`Localizable.strings`** files in the appropriate .lproj folders in your project. For example a spanish translation will be placed in the **'/es.lproj'** folder.
+
+Don't forget to add the language you've pulled in your project in the Localizations section of your xcode project.
+
+![Terrestrial Embedded Swift]({{ site.baseurl }}/images/localizations.png)
 
 ####Android
 
 In Android, the pull command will create the appropriate folder structure according to [android's default localization specification](http://developer.android.com/guide/topics/resources/localization.html) and place the translated **`strings.xml`** files in the right place.
+
+###Ignite
+
+	terrestrial ignite <language-code>
+
+This will launch your iOS app in the simulator using the last used build scheme.
+
+###Photoshoot
+
+	terrestrial photoshoot
+
+This works like ignite but launches your iOS app in your native language while also allowing you take screenshots that will generate live UI previews for translators on the web translation interface.
+
+A green camera icon should appear on the center right of the screen, which you can click to generate and upload the screenshots.
+
